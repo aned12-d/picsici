@@ -1,0 +1,2705 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>شبکه اجتماعی پیشرفته</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        :root {
+            --primary-color: #1da1f2;
+            --secondary-color: #e8f5fe;
+            --accent-color: #ff6b6b;
+            --text-color: #14171a;
+            --light-text: #657786;
+            --border-color: #e1e8ed;
+            --card-bg: #ffffff;
+            --hover-bg: #f5f8fa;
+            --twitter-blue: #1da1f2;
+            --twitter-dark: #15202b;
+            --telegram-blue: #0088cc;
+            --sidebar-width: 250px;
+            --header-height: 70px;
+            --success-color: #17bf63;
+            --warning-color: #ffad1f;
+        }
+        
+        body {
+            background: linear-gradient(135deg, #6a11cb 0%, #2575fc 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            color: var(--text-color);
+            transition: all 0.3s ease;
+        }
+        
+        body.social-media {
+            background: var(--card-bg);
+            display: block;
+            padding: 0;
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+        
+        body.dark-mode {
+            --text-color: #ffffff;
+            --light-text: #8899a6;
+            --border-color: #38444d;
+            --card-bg: var(--twitter-dark);
+            --hover-bg: #192734;
+            background-color: var(--twitter-dark);
+        }
+        
+        .container {
+            background-color: white;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            width: 100%;
+            max-width: 450px;
+            overflow: hidden;
+            animation: fadeIn 1s ease-out;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .header {
+            background: linear-gradient(135deg, #6a11cb 0%, #2575fc 100%);
+            color: white;
+            padding: 25px;
+            text-align: center;
+        }
+        
+        .header h1 {
+            font-size: 24px;
+            margin-bottom: 10px;
+        }
+        
+        .header p {
+            font-size: 14px;
+            opacity: 0.9;
+        }
+        
+        .form-container {
+            padding: 30px;
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: #333;
+        }
+        
+        .form-group input {
+            width: 100%;
+            padding: 12px 15px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            font-size: 16px;
+            transition: all 0.3s;
+        }
+        
+        .form-group input:focus {
+            border-color: #6a11cb;
+            box-shadow: 0 0 0 2px rgba(106, 17, 203, 0.2);
+            outline: none;
+        }
+        
+        .btn {
+            background: linear-gradient(135deg, #6a11cb 0%, #2575fc 100%);
+            color: white;
+            border: none;
+            padding: 14px;
+            width: 100%;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(106, 17, 203, 0.4);
+        }
+        
+        .login-link {
+            text-align: center;
+            margin-top: 20px;
+            font-size: 14px;
+        }
+        
+        .login-link a {
+            color: #6a11cb;
+            text-decoration: none;
+            font-weight: 600;
+        }
+        
+        .login-link a:hover {
+            text-decoration: underline;
+        }
+        
+        .message {
+            padding: 12px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            text-align: center;
+            display: none;
+        }
+        
+        .success {
+            background-color: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+        
+        .error {
+            background-color: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
+        
+        .redirect-message {
+            text-align: center;
+            padding: 20px;
+            background-color: #e8f5fe;
+            border-radius: 8px;
+            margin-top: 20px;
+            display: none;
+        }
+        
+        .redirect-message p {
+            margin-bottom: 15px;
+        }
+        
+        .redirect-button {
+            background-color: var(--twitter-blue);
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 20px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .redirect-button:hover {
+            background-color: #0d8bd9;
+        }
+        
+        /* استایل‌های شبکه اجتماعی */
+        #socialMediaPage {
+            display: none;
+        }
+        
+        /* استایل هدر شبکه اجتماعی */
+        .social-header {
+            background-color: var(--card-bg);
+            border-bottom: 1px solid var(--border-color);
+            padding: 0.8rem 1rem;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+            height: var(--header-height);
+        }
+        
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1400px;
+            margin: 0 auto;
+            height: 100%;
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: var(--primary-color);
+            font-size: 1.5rem;
+            font-weight: bold;
+        }
+        
+        .nav-links {
+            display: flex;
+            gap: 1.5rem;
+        }
+        
+        .nav-links a {
+            text-decoration: none;
+            color: var(--light-text);
+            font-weight: 500;
+            padding: 0.5rem 1rem;
+            border-radius: 25px;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+        
+        .nav-links a:hover, .nav-links a.active {
+            color: var(--primary-color);
+            background-color: var(--hover-bg);
+        }
+        
+        .nav-notification-badge {
+            position: absolute;
+            top: -5px;
+            right: -5px;
+            background-color: var(--accent-color);
+            color: white;
+            border-radius: 50%;
+            width: 18px;
+            height: 18px;
+            font-size: 0.7rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .header-actions {
+            display: flex;
+            gap: 1rem;
+            align-items: center;
+        }
+        
+        .theme-toggle, .messenger-toggle {
+            background: none;
+            border: none;
+            color: var(--light-text);
+            font-size: 1.2rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+        
+        .theme-toggle:hover, .messenger-toggle:hover {
+            color: var(--primary-color);
+        }
+        
+        .notification-badge {
+            position: absolute;
+            top: -5px;
+            right: -5px;
+            background-color: var(--accent-color);
+            color: white;
+            border-radius: 50%;
+            width: 18px;
+            height: 18px;
+            font-size: 0.7rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .tweet-button {
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            padding: 0.6rem 1.2rem;
+            border-radius: 25px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .tweet-button:hover {
+            background-color: #0d8bd9;
+        }
+        
+        /* استایل محتوای اصلی شبکه اجتماعی */
+        .main-container {
+            display: flex;
+            max-width: 1400px;
+            margin: 0 auto;
+            flex: 1;
+            overflow: hidden;
+            height: calc(100vh - var(--header-height));
+        }
+        
+        .left-sidebar {
+            flex: 0 0 var(--sidebar-width);
+            padding: 1.5rem 1rem;
+            overflow-y: auto;
+            border-right: 1px solid var(--border-color);
+        }
+        
+        .sidebar-nav {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+        
+        .sidebar-nav a {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            padding: 0.8rem 1rem;
+            text-decoration: none;
+            color: var(--text-color);
+            border-radius: 25px;
+            transition: all 0.3s ease;
+            font-weight: 500;
+            position: relative;
+        }
+        
+        .sidebar-nav a:hover, .sidebar-nav a.active {
+            background-color: var(--hover-bg);
+            color: var(--primary-color);
+        }
+        
+        .sidebar-notification-badge {
+            position: absolute;
+            top: 5px;
+            left: 5px;
+            background-color: var(--accent-color);
+            color: white;
+            border-radius: 50%;
+            width: 18px;
+            height: 18px;
+            font-size: 0.7rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .main-content {
+            flex: 1;
+            max-width: 600px;
+            border-right: 1px solid var(--border-color);
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .home-header {
+            padding: 1rem 1.5rem;
+            border-bottom: 1px solid var(--border-color);
+            position: sticky;
+            top: 0;
+            background-color: rgba(255, 255, 255, 0.9);
+            z-index: 10;
+            backdrop-filter: blur(10px);
+        }
+        
+        body.dark-mode .home-header {
+            background-color: rgba(21, 32, 43, 0.9);
+        }
+        
+        .home-header h1 {
+            font-size: 1.3rem;
+            font-weight: bold;
+        }
+        
+        .create-post {
+            padding: 1rem 1.5rem;
+            border-bottom: 1px solid var(--border-color);
+            display: flex;
+            gap: 1rem;
+        }
+        
+        .post-avatar {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--primary-color) 0%, #8f94fb 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.2rem;
+            flex-shrink: 0;
+        }
+        
+        .post-form {
+            flex: 1;
+        }
+        
+        .post-input {
+            width: 100%;
+            border: none;
+            resize: none;
+            font-size: 1.2rem;
+            padding: 0.5rem 0;
+            min-height: 60px;
+            outline: none;
+            background-color: transparent;
+            color: var(--text-color);
+        }
+        
+        .post-input::placeholder {
+            color: var(--light-text);
+        }
+        
+        .char-counter {
+            text-align: left;
+            font-size: 0.9rem;
+            color: var(--light-text);
+            margin-top: 0.5rem;
+        }
+        
+        .char-counter.warning {
+            color: #ffad1f;
+        }
+        
+        .char-counter.error {
+            color: #e0245e;
+        }
+        
+        .post-actions {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 1rem;
+            padding-top: 1rem;
+            border-top: 1px solid var(--border-color);
+        }
+        
+        .action-icons {
+            display: flex;
+            gap: 1rem;
+            color: var(--primary-color);
+        }
+        
+        .action-icons i {
+            cursor: pointer;
+            padding: 0.5rem;
+            border-radius: 50%;
+            transition: all 0.3s ease;
+        }
+        
+        .action-icons i:hover {
+            background-color: var(--hover-bg);
+        }
+        
+        .post-button {
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            padding: 0.5rem 1.5rem;
+            border-radius: 25px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .post-button:hover {
+            background-color: #0d8bd9;
+        }
+        
+        .post-button:disabled {
+            background-color: #9bd4f5;
+            cursor: not-allowed;
+        }
+        
+        .posts-feed {
+            flex: 1;
+            overflow-y: auto;
+        }
+        
+        .post-card {
+            padding: 1rem 1.5rem;
+            border-bottom: 1px solid var(--border-color);
+            transition: all 0.3s ease;
+            animation: fadeIn 0.5s ease-out;
+        }
+        
+        .post-card:hover {
+            background-color: var(--hover-bg);
+        }
+        
+        .post-header {
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+            margin-bottom: 0.5rem;
+        }
+        
+        .post-user-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--primary-color) 0%, #8f94fb 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1rem;
+            flex-shrink: 0;
+        }
+        
+        .post-user-info {
+            flex: 1;
+        }
+        
+        .post-username {
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+            gap: 0.3rem;
+        }
+        
+        .verified-badge {
+            color: var(--primary-color);
+            font-size: 0.9rem;
+        }
+        
+        .post-handle {
+            color: var(--light-text);
+            font-size: 0.9rem;
+        }
+        
+        .post-date {
+            color: var(--light-text);
+            font-size: 0.9rem;
+        }
+        
+        .post-content {
+            margin-bottom: 0.8rem;
+            line-height: 1.5;
+            white-space: pre-line;
+        }
+        
+        .post-stats {
+            display: flex;
+            color: var(--light-text);
+            font-size: 0.8rem;
+            gap: 1rem;
+            margin-bottom: 0.5rem;
+        }
+        
+        .post-actions-bar {
+            display: flex;
+            justify-content: space-between;
+            max-width: 400px;
+        }
+        
+        .post-action {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: var(--light-text);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            padding: 0.5rem;
+            border-radius: 50%;
+        }
+        
+        .post-action:hover {
+            background-color: rgba(29, 161, 242, 0.1);
+        }
+        
+        .post-action.comment:hover {
+            color: var(--primary-color);
+        }
+        
+        .post-action.retweet:hover {
+            color: #17bf63;
+        }
+        
+        .post-action.like:hover {
+            color: #e0245e;
+        }
+        
+        .post-action.share:hover {
+            color: var(--primary-color);
+        }
+        
+        .post-action.edit:hover {
+            color: var(--warning-color);
+        }
+        
+        .post-action.active-like {
+            color: #e0245e;
+        }
+        
+        .post-action.active-retweet {
+            color: #17bf63;
+        }
+        
+        /* استایل کامنت‌ها */
+        .comments-section {
+            margin-top: 1rem;
+            padding-top: 1rem;
+            border-top: 1px solid var(--border-color);
+            display: none;
+        }
+        
+        .comment-form {
+            display: flex;
+            gap: 0.8rem;
+            margin-bottom: 1rem;
+        }
+        
+        .comment-input {
+            flex: 1;
+            border: 1px solid var(--border-color);
+            border-radius: 20px;
+            padding: 0.8rem 1rem;
+            outline: none;
+            background-color: var(--hover-bg);
+            color: var(--text-color);
+        }
+        
+        .comment-button {
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            border-radius: 20px;
+            padding: 0 1.2rem;
+            cursor: pointer;
+        }
+        
+        .comment-list {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+        
+        .comment-item {
+            display: flex;
+            gap: 0.8rem;
+            padding: 0.8rem;
+            border-radius: 10px;
+            background-color: var(--hover-bg);
+        }
+        
+        .comment-avatar {
+            width: 35px;
+            height: 35px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--primary-color) 0%, #8f94fb 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 0.9rem;
+            flex-shrink: 0;
+        }
+        
+        .comment-content {
+            flex: 1;
+        }
+        
+        .comment-header {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-bottom: 0.3rem;
+        }
+        
+        .comment-username {
+            font-weight: bold;
+            font-size: 0.9rem;
+        }
+        
+        .comment-handle {
+            color: var(--light-text);
+            font-size: 0.8rem;
+        }
+        
+        .comment-text {
+            font-size: 0.9rem;
+            line-height: 1.4;
+        }
+        
+        .comment-actions {
+            display: flex;
+            gap: 1rem;
+            margin-top: 0.5rem;
+        }
+        
+        .comment-action {
+            display: flex;
+            align-items: center;
+            gap: 0.3rem;
+            color: var(--light-text);
+            font-size: 0.8rem;
+            cursor: pointer;
+        }
+        
+        .comment-action:hover {
+            color: var(--primary-color);
+        }
+        
+        .comment-action.like:hover {
+            color: #e0245e;
+        }
+        
+        .right-sidebar {
+            flex: 0 0 350px;
+            padding: 1.5rem 1rem;
+            overflow-y: auto;
+            border-left: 1px solid var(--border-color);
+        }
+        
+        .search-box {
+            background-color: var(--hover-bg);
+            border-radius: 25px;
+            padding: 0.8rem 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-bottom: 1.5rem;
+            position: relative;
+        }
+        
+        .search-box input {
+            background: none;
+            border: none;
+            outline: none;
+            flex: 1;
+            color: var(--text-color);
+        }
+        
+        .search-results {
+            position: absolute;
+            top: 100%;
+            left: 0;
+            right: 0;
+            background-color: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            max-height: 300px;
+            overflow-y: auto;
+            z-index: 100;
+            display: none;
+        }
+        
+        .search-result-item {
+            padding: 1rem;
+            border-bottom: 1px solid var(--border-color);
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .search-result-item:hover {
+            background-color: var(--hover-bg);
+        }
+        
+        .search-result-item:last-child {
+            border-bottom: none;
+        }
+        
+        .trends-card, .suggestions-card {
+            background-color: var(--hover-bg);
+            border-radius: 15px;
+            padding: 1rem;
+            margin-bottom: 1.5rem;
+        }
+        
+        .trends-title, .suggestions-title {
+            font-size: 1.2rem;
+            font-weight: bold;
+            margin-bottom: 1rem;
+            padding-bottom: 0.8rem;
+            border-bottom: 1px solid var(--border-color);
+        }
+        
+        .trend-item, .suggestion-item {
+            padding: 0.8rem 0;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .trend-item:not(:last-child), .suggestion-item:not(:last-child) {
+            border-bottom: 1px solid var(--border-color);
+        }
+        
+        .trend-item:hover, .suggestion-item:hover {
+            background-color: rgba(255, 255, 255, 0.1);
+            padding-right: 0.5rem;
+        }
+        
+        .trend-category {
+            font-size: 0.8rem;
+            color: var(--light-text);
+        }
+        
+        .trend-name {
+            font-weight: bold;
+            margin: 0.2rem 0;
+        }
+        
+        .trend-count {
+            font-size: 0.8rem;
+            color: var(--light-text);
+        }
+        
+        .suggestion-item {
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+        }
+        
+        .suggestion-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--primary-color) 0%, #8f94fb 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1rem;
+            flex-shrink: 0;
+        }
+        
+        .suggestion-info {
+            flex: 1;
+        }
+        
+        .suggestion-name {
+            font-weight: bold;
+        }
+        
+        .suggestion-handle {
+            color: var(--light-text);
+            font-size: 0.9rem;
+        }
+        
+        .follow-button {
+            background-color: var(--text-color);
+            color: var(--card-bg);
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        body.dark-mode .follow-button {
+            background-color: var(--card-bg);
+            color: var(--text-color);
+        }
+        
+        .follow-button:hover {
+            background-color: var(--primary-color);
+            color: white;
+        }
+        
+        /* پنل ایموجی */
+        .emoji-panel {
+            position: absolute;
+            bottom: 100%;
+            left: 0;
+            background-color: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            padding: 1rem;
+            z-index: 100;
+            width: 300px;
+            max-height: 200px;
+            overflow-y: auto;
+            display: none;
+            grid-template-columns: repeat(6, 1fr);
+            gap: 0.5rem;
+        }
+        
+        .emoji-item {
+            font-size: 1.2rem;
+            cursor: pointer;
+            text-align: center;
+            padding: 0.3rem;
+            border-radius: 5px;
+            transition: all 0.2s ease;
+        }
+        
+        .emoji-item:hover {
+            background-color: var(--hover-bg);
+            transform: scale(1.2);
+        }
+        
+        /* پنل تیک آبی */
+        .blue-tick-panel {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background-color: var(--card-bg);
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            padding: 2rem;
+            z-index: 1000;
+            width: 90%;
+            max-width: 400px;
+            display: none;
+        }
+        
+        .blue-tick-panel h2 {
+            margin-bottom: 1rem;
+            text-align: center;
+            color: var(--primary-color);
+        }
+        
+        .blue-tick-panel p {
+            margin-bottom: 1.5rem;
+            text-align: center;
+            color: var(--text-color);
+        }
+        
+        .blue-tick-options {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+        
+        .blue-tick-option {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            padding: 1rem;
+            border: 1px solid var(--border-color);
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .blue-tick-option:hover {
+            background-color: var(--hover-bg);
+        }
+        
+        .blue-tick-option.selected {
+            border-color: var(--primary-color);
+            background-color: rgba(29, 161, 242, 0.1);
+        }
+        
+        .option-icon {
+            font-size: 1.5rem;
+            color: var(--primary-color);
+        }
+        
+        .option-info {
+            flex: 1;
+        }
+        
+        .option-title {
+            font-weight: bold;
+            margin-bottom: 0.3rem;
+        }
+        
+        .option-desc {
+            font-size: 0.9rem;
+            color: var(--light-text);
+        }
+        
+        .blue-tick-actions {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 1.5rem;
+        }
+        
+        .overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: rgba(0, 0, 0, 0.5);
+            z-index: 999;
+            display: none;
+        }
+        
+        /* پنل اعلان‌ها */
+        .notifications-panel {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background-color: var(--card-bg);
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            padding: 1.5rem;
+            z-index: 1000;
+            width: 90%;
+            max-width: 500px;
+            max-height: 80vh;
+            overflow-y: auto;
+            display: none;
+        }
+        
+        .notifications-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid var(--border-color);
+        }
+        
+        .notifications-title {
+            font-size: 1.3rem;
+            font-weight: bold;
+            color: var(--primary-color);
+        }
+        
+        .close-notifications {
+            background: none;
+            border: none;
+            color: var(--light-text);
+            font-size: 1.2rem;
+            cursor: pointer;
+        }
+        
+        .notification-item {
+            padding: 1rem;
+            border-bottom: 1px solid var(--border-color);
+            display: flex;
+            gap: 1rem;
+            transition: all 0.3s ease;
+        }
+        
+        .notification-item:hover {
+            background-color: var(--hover-bg);
+        }
+        
+        .notification-item:last-child {
+            border-bottom: none;
+        }
+        
+        .notification-avatar {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--primary-color) 0%, #8f94fb 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.2rem;
+            flex-shrink: 0;
+        }
+        
+        .notification-content {
+            flex: 1;
+        }
+        
+        .notification-text {
+            margin-bottom: 0.5rem;
+            line-height: 1.4;
+        }
+        
+        .notification-time {
+            font-size: 0.8rem;
+            color: var(--light-text);
+        }
+        
+        .notification-unread {
+            background-color: rgba(29, 161, 242, 0.1);
+        }
+        
+        /* پنل ویرایش توییت */
+        .edit-tweet-panel {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background-color: var(--card-bg);
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            padding: 1.5rem;
+            z-index: 1000;
+            width: 90%;
+            max-width: 500px;
+            display: none;
+        }
+        
+        .edit-tweet-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid var(--border-color);
+        }
+        
+        .edit-tweet-title {
+            font-size: 1.3rem;
+            font-weight: bold;
+            color: var(--primary-color);
+        }
+        
+        .close-edit-tweet {
+            background: none;
+            border: none;
+            color: var(--light-text);
+            font-size: 1.2rem;
+            cursor: pointer;
+        }
+        
+        .edit-tweet-input {
+            width: 100%;
+            border: 1px solid var(--border-color);
+            border-radius: 10px;
+            padding: 1rem;
+            font-size: 1rem;
+            resize: vertical;
+            min-height: 120px;
+            outline: none;
+            background-color: var(--hover-bg);
+            color: var(--text-color);
+            margin-bottom: 1rem;
+        }
+        
+        .edit-tweet-actions {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .edit-char-counter {
+            font-size: 0.9rem;
+            color: var(--light-text);
+        }
+        
+        .save-tweet-button {
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            padding: 0.5rem 1.5rem;
+            border-radius: 20px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+        
+        /* منوی موبایل */
+        .mobile-menu {
+            display: none;
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background-color: var(--card-bg);
+            border-top: 1px solid var(--border-color);
+            padding: 0.5rem;
+            z-index: 100;
+        }
+        
+        .mobile-nav {
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+        }
+        
+        .mobile-nav a {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-decoration: none;
+            color: var(--light-text);
+            font-size: 0.8rem;
+            padding: 0.5rem;
+            border-radius: 10px;
+            transition: all 0.3s ease;
+            flex: 1;
+            text-align: center;
+            position: relative;
+        }
+        
+        .mobile-nav a:hover, .mobile-nav a.active {
+            color: var(--primary-color);
+            background-color: var(--hover-bg);
+        }
+        
+        .mobile-nav i {
+            font-size: 1.2rem;
+            margin-bottom: 0.3rem;
+        }
+        
+        .mobile-notification-badge {
+            position: absolute;
+            top: 0;
+            left: 50%;
+            background-color: var(--accent-color);
+            color: white;
+            border-radius: 50%;
+            width: 18px;
+            height: 18px;
+            font-size: 0.7rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        /* رسپانسیو برای تبلت */
+        @media (max-width: 1024px) {
+            .right-sidebar {
+                flex: 0 0 300px;
+            }
+            
+            .left-sidebar {
+                flex: 0 0 220px;
+            }
+        }
+        
+        /* رسپانسیو برای تبلت کوچک */
+        @media (max-width: 768px) {
+            .right-sidebar {
+                display: none;
+            }
+            
+            .left-sidebar {
+                flex: 0 0 200px;
+            }
+            
+            .nav-links {
+                display: none;
+            }
+            
+            .mobile-menu {
+                display: block;
+            }
+            
+            .main-content {
+                border-right: none;
+            }
+        }
+        
+        /* رسپانسیو برای موبایل */
+        @media (max-width: 640px) {
+            .left-sidebar {
+                display: none;
+            }
+            
+            .header-content {
+                justify-content: space-between;
+            }
+            
+            .logo span {
+                display: none;
+            }
+            
+            .create-post {
+                padding: 1rem;
+            }
+            
+            .post-card {
+                padding: 1rem;
+            }
+            
+            .post-actions-bar {
+                max-width: 100%;
+            }
+            
+            .container {
+                border-radius: 10px;
+                max-width: 100%;
+            }
+            
+            .header {
+                padding: 20px;
+            }
+            
+            .form-container {
+                padding: 20px;
+            }
+        }
+        
+        /* رسپانسیو برای موبایل کوچک */
+        @media (max-width: 480px) {
+            .post-header {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 0.5rem;
+            }
+            
+            .post-date {
+                align-self: flex-end;
+            }
+            
+            .post-actions-bar {
+                flex-wrap: wrap;
+                gap: 0.5rem;
+            }
+            
+            .post-action {
+                flex: 1;
+                justify-content: center;
+            }
+            
+            .action-icons {
+                gap: 0.5rem;
+            }
+            
+            .mobile-nav a span {
+                font-size: 0.7rem;
+            }
+            
+            .emoji-panel {
+                width: 250px;
+                grid-template-columns: repeat(5, 1fr);
+            }
+        }
+        
+        /* رسپانسیو برای موبایل خیلی کوچک */
+        @media (max-width: 360px) {
+            .post-avatar {
+                width: 40px;
+                height: 40px;
+                font-size: 1rem;
+            }
+            
+            .post-user-avatar {
+                width: 35px;
+                height: 35px;
+                font-size: 0.9rem;
+            }
+            
+            .home-header {
+                padding: 1rem;
+            }
+            
+            .create-post {
+                padding: 0.8rem;
+            }
+            
+            .post-card {
+                padding: 0.8rem;
+            }
+            
+            .mobile-nav a {
+                padding: 0.3rem;
+            }
+            
+            .mobile-nav i {
+                font-size: 1rem;
+            }
+            
+            .emoji-panel {
+                width: 220px;
+                grid-template-columns: repeat(4, 1fr);
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- صفحه ثبت‌نام -->
+    <div class="container" id="registrationPage">
+        <div class="header">
+            <h1>شبکه اجتماعی پیشرفته</h1>
+            <p>ثبت‌نام سریع و آسان با قابلیت‌های کامل</p>
+        </div>
+        
+        <div class="form-container">
+            <div id="message" class="message"></div>
+            
+            <form id="registerForm">
+                <div class="form-group">
+                    <label for="username">نام کاربری</label>
+                    <input type="text" id="username" placeholder="نام کاربری خود را وارد کنید" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="password">رمز عبور</label>
+                    <input type="password" id="password" placeholder="رمز عبور خود را وارد کنید" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="confirmPassword">تکرار رمز عبور</label>
+                    <input type="password" id="confirmPassword" placeholder="رمز عبور خود را مجدداً وارد کنید" required>
+                </div>
+                
+                <button type="submit" class="btn">ثبت‌نام</button>
+            </form>
+            
+            <div class="login-link">
+                قبلاً ثبت‌نام کرده‌اید؟ <a href="#" id="showLogin">ورود به حساب کاربری</a>
+            </div>
+            
+            <div class="redirect-message" id="redirectMessage">
+                <p>ثبت‌نام شما با موفقیت انجام شد!</p>
+                <p>در حال انتقال به شبکه اجتماعی...</p>
+                <button class="redirect-button" id="redirectButton">ورود به شبکه اجتماعی</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- صفحه شبکه اجتماعی -->
+    <div id="socialMediaPage">
+        <header class="social-header">
+            <div class="header-content">
+                <div class="logo">
+                    <i class="fab fa-twitter"></i>
+                    <span>شبکه اجتماعی</span>
+                </div>
+                <div class="nav-links">
+                    <a href="#" class="active" id="homeLink"><i class="fas fa-home"></i> خانه</a>
+                    <a href="#" id="exploreLink"><i class="fas fa-hashtag"></i> کاوش</a>
+                    <a href="#" id="notificationsLink">
+                        <i class="fas fa-bell"></i> اعلان‌ها
+                        <span class="nav-notification-badge" id="navNotificationBadge">۵</span>
+                    </a>
+                    <a href="#"><i class="fas fa-envelope"></i> پیام‌ها</a>
+                </div>
+                <div class="header-actions">
+                    <button class="theme-toggle" id="themeToggle">
+                        <i class="fas fa-moon"></i>
+                    </button>
+                    <button class="tweet-button" id="headerTweetButton">
+                        <i class="fas fa-feather-alt"></i> توییت
+                    </button>
+                </div>
+            </div>
+        </header>
+        
+        <div class="main-container">
+            <div class="left-sidebar">
+                <div class="sidebar-nav">
+                    <a href="#" class="active" id="sidebarHomeLink">
+                        <i class="fas fa-home"></i>
+                        <span>خانه</span>
+                    </a>
+                    <a href="#" id="sidebarExploreLink">
+                        <i class="fas fa-hashtag"></i>
+                        <span>کاوش</span>
+                    </a>
+                    <a href="#" id="sidebarNotificationsLink">
+                        <i class="fas fa-bell"></i>
+                        <span>اعلان‌ها</span>
+                        <span class="sidebar-notification-badge" id="sidebarNotificationBadge">۵</span>
+                    </a>
+                    <a href="#">
+                        <i class="fas fa-envelope"></i>
+                        <span>پیام‌ها</span>
+                    </a>
+                    <a href="#">
+                        <i class="fas fa-bookmark"></i>
+                        <span>نشان‌ها</span>
+                    </a>
+                    <a href="#" id="blueTickLink">
+                        <i class="fas fa-badge-check"></i>
+                        <span>دریافت تیک آبی</span>
+                    </a>
+                    <a href="#">
+                        <i class="fas fa-user"></i>
+                        <span>پروفایل</span>
+                    </a>
+                </div>
+            </div>
+            
+            <div class="main-content">
+                <div class="home-header">
+                    <h1 id="pageTitle">خانه</h1>
+                </div>
+                
+                <!-- بخش جستجو -->
+                <div class="search-section" id="searchSection" style="display: none;">
+                    <div class="search-box" style="margin: 1rem 1.5rem;">
+                        <i class="fas fa-search"></i>
+                        <input type="text" id="mainSearchInput" placeholder="جستجو در توییت‌ها، کاربران، هشتگ‌ها...">
+                        <div class="search-results" id="mainSearchResults"></div>
+                    </div>
+                </div>
+                
+                <div class="create-post" id="createPostSection">
+                    <div class="post-avatar">
+                        <i class="fas fa-user"></i>
+                    </div>
+                    <div class="post-form">
+                        <textarea class="post-input" id="tweetInput" placeholder="چه خبر؟" maxlength="280"></textarea>
+                        <div class="char-counter" id="charCounter">۰/۲۸۰</div>
+                        <div class="post-actions">
+                            <div class="action-icons">
+                                <i class="fas fa-image" title="افزودن عکس"></i>
+                                <i class="fas fa-smile" id="emojiButton" title="افزودن ایموجی"></i>
+                                <i class="fas fa-map-marker-alt" title="افزودن موقعیت"></i>
+                                <div class="emoji-panel" id="emojiPanel">
+                                    <!-- ایموجی‌ها توسط جاوااسکریپت اضافه می‌شوند -->
+                                </div>
+                            </div>
+                            <button class="post-button" id="tweetButton" disabled>توییت</button>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="posts-feed" id="postsFeed">
+                    <!-- پست‌ها در اینجا نمایش داده می‌شوند -->
+                </div>
+            </div>
+            
+            <div class="right-sidebar">
+                <div class="search-box">
+                    <i class="fas fa-search"></i>
+                    <input type="text" id="sidebarSearchInput" placeholder="جستجو کنید...">
+                    <div class="search-results" id="sidebarSearchResults"></div>
+                </div>
+                
+                <div class="trends-card">
+                    <div class="trends-title">ترندهای داغ</div>
+                    <div class="trend-item">
+                        <div class="trend-category">تکنولوژی · ترند</div>
+                        <div class="trend-name">هوش مصنوعی</div>
+                        <div class="trend-count">۱۲٫۴ هزار توییت</div>
+                    </div>
+                    <div class="trend-item">
+                        <div class="trend-category">برنامه‌نویسی · ترند</div>
+                        <div class="trend-name">JavaScript</div>
+                        <div class="trend-count">۸٫۷ هزار توییت</div>
+                    </div>
+                    <div class="trend-item">
+                        <div class="trend-category">طراحی · ترند</div>
+                        <div class="trend-name">UI/UX</div>
+                        <div class="trend-count">۵٫۲ هزار توییت</div>
+                    </div>
+                </div>
+                
+                <div class="suggestions-card">
+                    <div class="suggestions-title">پیشنهادهایی برای دنبال کردن</div>
+                    <div class="suggestion-item">
+                        <div class="suggestion-avatar">
+                            <i class="fas fa-user"></i>
+                        </div>
+                        <div class="suggestion-info">
+                            <div class="suggestion-name">تکنولوژی روز</div>
+                            <div class="suggestion-handle">@techdaily</div>
+                        </div>
+                        <button class="follow-button">دنبال کردن</button>
+                    </div>
+                    <div class="suggestion-item">
+                        <div class="suggestion-avatar">
+                            <i class="fas fa-user"></i>
+                        </div>
+                        <div class="suggestion-info">
+                            <div class="suggestion-name">طراحی وب</div>
+                            <div class="suggestion-handle">@webdesign</div>
+                        </div>
+                        <button class="follow-button">دنبال کردن</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- منوی موبایل -->
+        <div class="mobile-menu">
+            <div class="mobile-nav">
+                <a href="#" class="active" id="mobileHomeLink">
+                    <i class="fas fa-home"></i>
+                    <span>خانه</span>
+                </a>
+                <a href="#" id="mobileExploreLink">
+                    <i class="fas fa-search"></i>
+                    <span>جستجو</span>
+                </a>
+                <a href="#" id="mobileNotificationsLink">
+                    <i class="fas fa-bell"></i>
+                    <span>اعلان‌ها</span>
+                    <span class="mobile-notification-badge" id="mobileNotificationBadge">۵</span>
+                </a>
+                <a href="#">
+                    <i class="fas fa-envelope"></i>
+                    <span>پیام‌ها</span>
+                </a>
+                <a href="#" id="mobileBlueTick">
+                    <i class="fas fa-badge-check"></i>
+                    <span>تیک آبی</span>
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <!-- پنل دریافت تیک آبی -->
+    <div class="overlay" id="overlay"></div>
+    <div class="blue-tick-panel" id="blueTickPanel">
+        <h2><i class="fas fa-badge-check"></i> دریافت تیک آبی</h2>
+        <p>برای دریافت تیک آبی، یکی از گزینه‌های زیر را انتخاب کنید:</p>
+        
+        <div class="blue-tick-options">
+            <div class="blue-tick-option" data-type="free">
+                <div class="option-icon">
+                    <i class="fas fa-user-check"></i>
+                </div>
+                <div class="option-info">
+                    <div class="option-title">تیک آبی رایگان</div>
+                    <div class="option-desc">برای کاربران فعال و تأثیرگذار</div>
+                </div>
+            </div>
+            
+            <div class="blue-tick-option" data-type="premium">
+                <div class="option-icon">
+                    <i class="fas fa-crown"></i>
+                </div>
+                <div class="option-info">
+                    <div class="option-title">تیک آبی پریمیوم</div>
+                    <div class="option-desc">دسترسی به ویژگی‌های ویژه</div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="blue-tick-actions">
+            <button class="btn" id="cancelBlueTick">انصراف</button>
+            <button class="btn" id="applyBlueTick" disabled>درخواست تیک آبی</button>
+        </div>
+    </div>
+
+    <!-- پنل اعلان‌ها -->
+    <div class="notifications-panel" id="notificationsPanel">
+        <div class="notifications-header">
+            <div class="notifications-title">اعلان‌ها</div>
+            <button class="close-notifications" id="closeNotifications">
+                <i class="fas fa-times"></i>
+            </button>
+        </div>
+        
+        <div class="notifications-list" id="notificationsList">
+            <!-- اعلان‌ها در اینجا نمایش داده می‌شوند -->
+        </div>
+    </div>
+
+    <!-- پنل ویرایش توییت -->
+    <div class="edit-tweet-panel" id="editTweetPanel">
+        <div class="edit-tweet-header">
+            <div class="edit-tweet-title">ویرایش توییت</div>
+            <button class="close-edit-tweet" id="closeEditTweet">
+                <i class="fas fa-times"></i>
+            </button>
+        </div>
+        <textarea class="edit-tweet-input" id="editTweetInput" maxlength="280"></textarea>
+        <div class="edit-tweet-actions">
+            <div class="edit-char-counter" id="editCharCounter">۰/۲۸۰</div>
+            <button class="save-tweet-button" id="saveTweetButton">ذخیره تغییرات</button>
+        </div>
+    </div>
+
+    <script>
+        // داده‌های نمونه برای پست‌ها
+        let posts = [
+            {
+                id: 1,
+                user: { name: "علی محمدی", handle: "@alimohammadi", verified: true },
+                content: "امروز یک پروژه جدید رو شروع کردم! یه شبکه اجتماعی ریسپانسیو با HTML, CSS و JavaScript. 😊",
+                timeAgo: "۲ ساعت پیش",
+                stats: { replies: 5, retweets: 12, likes: 45, views: 1200 },
+                liked: false,
+                retweeted: false,
+                comments: [
+                    {
+                        id: 1,
+                        user: { name: "سارا احمدی", handle: "@saraahmadi" },
+                        content: "عالی هست! موفق باشی 👏",
+                        timeAgo: "۱ ساعت پیش",
+                        likes: 3,
+                        liked: false
+                    }
+                ]
+            },
+            {
+                id: 2,
+                user: { name: "سارا احمدی", handle: "@saraahmadi", verified: false },
+                content: "تازه یک دوره آموزشی طراحی وب ریسپانسیو رو تموم کردم و واقعا از نتیجه راضی هستم. 💻",
+                timeAgo: "۴ ساعت پیش",
+                stats: { replies: 3, retweets: 8, likes: 32, views: 980 },
+                liked: false,
+                retweeted: false,
+                comments: []
+            },
+            {
+                id: 3,
+                user: { name: "محمد رضایی", handle: "@mrezaei", verified: true },
+                content: "صبح زیبایی داریم امیدوارم که روز خوبی داشته باشید. چه برنامه‌ای برای آخر هفته دارید؟ 🌞",
+                timeAgo: "۶ ساعت پیش",
+                stats: { replies: 15, retweets: 25, likes: 89, views: 2100 },
+                liked: true,
+                retweeted: false,
+                comments: [
+                    {
+                        id: 2,
+                        user: { name: "فاطمه کریمی", handle: "@fkarimi" },
+                        content: "من قصد دارم به کوه برم 🏞️",
+                        timeAgo: "۵ ساعت پیش",
+                        likes: 7,
+                        liked: true
+                    },
+                    {
+                        id: 3,
+                        user: { name: "رضا حسینی", handle: "@rhosseini" },
+                        content: "منم میخوام استراحت کنم و کتاب بخونم 📚",
+                        timeAgo: "۴ ساعت پیش",
+                        likes: 4,
+                        liked: false
+                    }
+                ]
+            },
+            {
+                id: 4,
+                user: { name: "فاطمه کریمی", handle: "@fkarimi", verified: false },
+                content: "در حال یادگیری React هستم. واقعا فریمورک جالبی هستش! #برنامه‌نویسی #React ⚛️",
+                timeAgo: "۱ روز پیش",
+                stats: { replies: 8, retweets: 15, likes: 67, views: 1500 },
+                liked: false,
+                retweeted: true,
+                comments: []
+            },
+            {
+                id: 5,
+                user: { name: "رضا حسینی", handle: "@rhosseini", verified: false },
+                content: "کتاب جدیدی در مورد هوش مصنوعی خریدم. نمیتونم صبر کنم که شروع به خوندنش کنم. 🤖",
+                timeAgo: "۱ روز پیش",
+                stats: { replies: 4, retweets: 9, likes: 42, views: 1100 },
+                liked: false,
+                retweeted: false,
+                comments: []
+            },
+            {
+                id: 6,
+                user: { name: "نازنین جعفری", handle: "@njafari", verified: true },
+                content: "امروز توی پارک قدم میزدم و به این فکر میکردم که چقدر طبیعت میتونه به آرامش ذهن کمک کنه. 🌳",
+                timeAgo: "۲ روز پیش",
+                stats: { replies: 12, retweets: 22, likes: 98, views: 1800 },
+                liked: false,
+                retweeted: false,
+                comments: []
+            },
+            {
+                id: 7,
+                user: { name: "امیر عباسی", handle: "@aabbasi", verified: false },
+                content: "یادگیری یک زبان برنامه‌نویسی جدید رو شروع کردم. پایتون واقعا زبان جالبی هستش. 🐍",
+                timeAgo: "۲ روز پیش",
+                stats: { replies: 6, retweets: 11, likes: 53, views: 1300 },
+                liked: false,
+                retweeted: false,
+                comments: []
+            },
+            {
+                id: 8,
+                user: { name: "مریم موسوی", handle: "@mmousavi", verified: false },
+                content: "امروز با دوستان دورهمی داشتیم و خیلی خوش گذشت. گاهی اوقات نیاز داریم که از فضای کار فاصله بگیریم. 😄",
+                timeAgo: "۳ روز پیش",
+                stats: { replies: 9, retweets: 18, likes: 76, views: 1600 },
+                liked: false,
+                retweeted: false,
+                comments: []
+            }
+        ];
+
+        // داده‌های نمونه برای اعلان‌ها
+        const sampleNotifications = [
+            {
+                id: 1,
+                user: { name: "سارا احمدی", handle: "@saraahmadi" },
+                type: "like",
+                text: "پست شما را لایک کرد",
+                timeAgo: "۵ دقیقه پیش",
+                read: false
+            },
+            {
+                id: 2,
+                user: { name: "محمد رضایی", handle: "@mrezaei" },
+                type: "retweet",
+                text: "توییت شما را ریتوییت کرد",
+                timeAgo: "۱ ساعت پیش",
+                read: false
+            },
+            {
+                id: 3,
+                user: { name: "فاطمه کریمی", handle: "@fkarimi" },
+                type: "follow",
+                text: "شما را دنبال کرد",
+                timeAgo: "۲ ساعت پیش",
+                read: false
+            },
+            {
+                id: 4,
+                user: { name: "تکنولوژی روز", handle: "@techdaily" },
+                type: "mention",
+                text: "شما را در یک توییت mention کرد",
+                timeAgo: "۵ ساعت پیش",
+                read: true
+            },
+            {
+                id: 5,
+                user: { name: "سیستم", handle: "@system" },
+                type: "system",
+                text: "تیک آبی شما تأیید شد!",
+                timeAgo: "۱ روز پیش",
+                read: true
+            }
+        ];
+
+        // لیست ایموجی‌ها
+        const emojis = ["😀", "😃", "😄", "😁", "😆", "😅", "😂", "🤣", "😊", "😇", "🙂", "🙃", "😉", "😌", "😍", "🥰", "😘", "😗", "😙", "😚", "😋", "😛", "😝", "😜", "🤪", "🤨", "🧐", "🤓", "😎", "🤩", "🥳", "😏", "😒", "😞", "😔", "😟", "😕", "🙁", "☹️", "😣", "😖", "😫", "😩", "🥺", "😢", "😭", "😤", "😠", "😡", "🤬", "🤯", "😳", "🥵", "🥶", "😱", "😨", "😰", "😥", "😓", "🤗", "🤔", "🤭", "🤫", "🤥", "😶", "😐", "😑", "😬", "🙄", "😯", "😦", "😧", "😮", "😲", "🥱", "😴", "🤤", "😪", "😵", "🤐", "🥴", "🤢", "🤮", "🤧", "😷", "🤒", "🤕", "🤑", "🤠", "😈", "👿", "👹", "👺", "🤡", "💩", "👻", "💀", "☠️", "👽", "👾", "🤖", "🎃", "😺", "😸", "😹", "😻", "😼", "😽", "🙀", "😿", "😾"];
+
+        // اطلاعات کاربر فعلی
+        let currentUser = {
+            name: "کاربر جدید",
+            handle: "@newuser",
+            verified: false
+        };
+
+        // متغیرهای حالت
+        let currentEditingTweetId = null;
+
+        // نمایش پیام
+        function showMessage(message, type) {
+            const messageEl = document.getElementById('message');
+            messageEl.textContent = message;
+            messageEl.className = 'message ' + type;
+            messageEl.style.display = 'block';
+            
+            setTimeout(() => {
+                messageEl.style.display = 'none';
+            }, 5000);
+        }
+        
+        // هدایت به صفحه شبکه اجتماعی
+        function redirectToSocialMedia() {
+            const registrationPage = document.getElementById('registrationPage');
+            const socialMediaPage = document.getElementById('socialMediaPage');
+            const redirectMessage = document.getElementById('redirectMessage');
+            
+            // نمایش پیام هدایت
+            redirectMessage.style.display = 'block';
+            
+            // هدایت پس از 2 ثانیه
+            setTimeout(() => {
+                registrationPage.style.display = 'none';
+                socialMediaPage.style.display = 'block';
+                document.body.classList.add('social-media');
+                
+                // بارگذاری پست‌ها در شبکه اجتماعی
+                loadPosts();
+                // بارگذاری اعلان‌ها
+                loadNotifications();
+                // بارگذاری ایموجی‌ها
+                loadEmojis();
+            }, 2000);
+        }
+        
+        // بارگذاری پست‌ها در شبکه اجتماعی
+        function loadPosts() {
+            const postsFeed = document.getElementById('postsFeed');
+            postsFeed.innerHTML = '';
+            
+            posts.forEach(post => {
+                const postElement = createPostElement(post);
+                postsFeed.appendChild(postElement);
+            });
+        }
+        
+        // ایجاد المان پست
+        function createPostElement(post) {
+            const postElement = document.createElement('div');
+            postElement.className = 'post-card';
+            postElement.dataset.postId = post.id;
+            
+            const verifiedBadge = post.user.verified ? '<i class="fas fa-check-circle verified-badge"></i>' : '';
+            const likeClass = post.liked ? 'post-action like active-like' : 'post-action like';
+            const retweetClass = post.retweeted ? 'post-action retweet active-retweet' : 'post-action retweet';
+            
+            // ایجاد HTML برای کامنت‌ها
+            let commentsHTML = '';
+            if (post.comments && post.comments.length > 0) {
+                commentsHTML = '<div class="comment-list">';
+                post.comments.forEach(comment => {
+                    const commentLikeClass = comment.liked ? 'comment-action like active-like' : 'comment-action like';
+                    commentsHTML += `
+                        <div class="comment-item">
+                            <div class="comment-avatar">
+                                <i class="fas fa-user"></i>
+                            </div>
+                            <div class="comment-content">
+                                <div class="comment-header">
+                                    <div class="comment-username">${comment.user.name}</div>
+                                    <div class="comment-handle">${comment.user.handle}</div>
+                                </div>
+                                <div class="comment-text">${comment.content}</div>
+                                <div class="comment-actions">
+                                    <div class="${commentLikeClass}" data-comment-id="${comment.id}" data-post-id="${post.id}">
+                                        <i class="far fa-heart"></i>
+                                        <span>${comment.likes}</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    `;
+                });
+                commentsHTML += '</div>';
+            }
+            
+            postElement.innerHTML = `
+                <div class="post-header">
+                    <div class="post-user-avatar">
+                        <i class="fas fa-user"></i>
+                    </div>
+                    <div class="post-user-info">
+                        <div class="post-username">
+                            ${post.user.name}
+                            ${verifiedBadge}
+                        </div>
+                        <div class="post-handle">${post.user.handle}</div>
+                    </div>
+                    <div class="post-date">${post.timeAgo}</div>
+                </div>
+                <div class="post-content">${post.content}</div>
+                <div class="post-stats">
+                    <span>${post.stats.views.toLocaleString()} نمایش</span>
+                </div>
+                <div class="post-actions-bar">
+                    <div class="post-action comment" data-post-id="${post.id}">
+                        <i class="far fa-comment"></i>
+                        <span>${post.stats.replies}</span>
+                    </div>
+                    <div class="${retweetClass}" data-post-id="${post.id}">
+                        <i class="fas fa-retweet"></i>
+                        <span>${post.stats.retweets}</span>
+                    </div>
+                    <div class="${likeClass}" data-post-id="${post.id}">
+                        <i class="far fa-heart"></i>
+                        <span>${post.stats.likes}</span>
+                    </div>
+                    <div class="post-action edit" data-post-id="${post.id}">
+                        <i class="far fa-edit"></i>
+                    </div>
+                    <div class="post-action share">
+                        <i class="far fa-share-square"></i>
+                    </div>
+                </div>
+                <div class="comments-section" id="comments-${post.id}">
+                    <div class="comment-form">
+                        <input type="text" class="comment-input" id="comment-input-${post.id}" placeholder="نظر خود را بنویسید...">
+                        <button class="comment-button" data-post-id="${post.id}">ارسال</button>
+                    </div>
+                    ${commentsHTML}
+                </div>
+            `;
+            
+            return postElement;
+        }
+        
+        // ارسال توییت جدید
+        function sendTweet() {
+            const tweetInput = document.getElementById('tweetInput');
+            const tweetContent = tweetInput.value.trim();
+            
+            if (tweetContent.length === 0) return;
+            
+            const newTweet = {
+                id: Date.now(),
+                user: currentUser,
+                content: tweetContent,
+                timeAgo: "همین الان",
+                stats: { replies: 0, retweets: 0, likes: 0, views: 0 },
+                liked: false,
+                retweeted: false,
+                comments: []
+            };
+            
+            posts.unshift(newTweet);
+            
+            const postElement = createPostElement(newTweet);
+            const postsFeed = document.getElementById('postsFeed');
+            postsFeed.insertBefore(postElement, postsFeed.firstChild);
+            
+            // پاک کردن فیلد ورودی
+            tweetInput.value = '';
+            updateCharCounter();
+            
+            // نمایش پیام موفقیت
+            showMessageInSocial("توییت شما با موفقیت ارسال شد!", "success");
+        }
+        
+        // نمایش پیام در شبکه اجتماعی
+        function showMessageInSocial(message, type) {
+            // ایجاد المان پیام موقت
+            const messageEl = document.createElement('div');
+            messageEl.className = `message ${type}`;
+            messageEl.textContent = message;
+            messageEl.style.position = 'fixed';
+            messageEl.style.top = '80px';
+            messageEl.style.left = '50%';
+            messageEl.style.transform = 'translateX(-50%)';
+            messageEl.style.zIndex = '1000';
+            messageEl.style.width = '90%';
+            messageEl.style.maxWidth = '400px';
+            
+            document.body.appendChild(messageEl);
+            
+            setTimeout(() => {
+                messageEl.remove();
+            }, 3000);
+        }
+        
+        // به‌روزرسانی شمارنده کاراکتر
+        function updateCharCounter() {
+            const tweetInput = document.getElementById('tweetInput');
+            const charCounter = document.getElementById('charCounter');
+            const tweetButton = document.getElementById('tweetButton');
+            
+            const charCount = tweetInput.value.length;
+            charCounter.textContent = `${charCount}/۲۸۰`;
+            
+            // فعال/غیرفعال کردن دکمه توییت
+            if (charCount > 0 && charCount <= 280) {
+                tweetButton.disabled = false;
+            } else {
+                tweetButton.disabled = true;
+            }
+            
+            // تغییر رنگ شمارنده بر اساس تعداد کاراکترها
+            if (charCount > 250) {
+                charCounter.className = 'char-counter warning';
+            } else if (charCount > 280) {
+                charCounter.className = 'char-counter error';
+            } else {
+                charCounter.className = 'char-counter';
+            }
+        }
+        
+        // لایک کردن پست
+        function likePost(postId) {
+            const post = posts.find(p => p.id === postId);
+            if (!post) return;
+            
+            if (post.liked) {
+                post.stats.likes--;
+                post.liked = false;
+            } else {
+                post.stats.likes++;
+                post.liked = true;
+            }
+            
+            // به‌روزرسانی نمایش
+            loadPosts();
+        }
+        
+        // ریتوییت کردن پست
+        function retweetPost(postId) {
+            const post = posts.find(p => p.id === postId);
+            if (!post) return;
+            
+            if (post.retweeted) {
+                post.stats.retweets--;
+                post.retweeted = false;
+            } else {
+                post.stats.retweets++;
+                post.retweeted = true;
+                
+                // ایجاد یک ریتوییت جدید
+                const retweet = {
+                    id: Date.now(),
+                    user: currentUser,
+                    content: `ریتوییت از ${post.user.handle}: ${post.content}`,
+                    timeAgo: "همین الان",
+                    stats: { replies: 0, retweets: 0, likes: 0, views: 0 },
+                    liked: false,
+                    retweeted: false,
+                    comments: []
+                };
+                
+                posts.unshift(retweet);
+            }
+            
+            // به‌روزرسانی نمایش
+            loadPosts();
+        }
+        
+        // افزودن کامنت
+        function addComment(postId, commentText) {
+            const post = posts.find(p => p.id === postId);
+            if (!post || !commentText.trim()) return;
+            
+            const newComment = {
+                id: Date.now(),
+                user: currentUser,
+                content: commentText,
+                timeAgo: "همین الان",
+                likes: 0,
+                liked: false
+            };
+            
+            if (!post.comments) {
+                post.comments = [];
+            }
+            
+            post.comments.push(newComment);
+            post.stats.replies++;
+            
+            // به‌روزرسانی نمایش
+            loadPosts();
+        }
+        
+        // لایک کردن کامنت
+        function likeComment(postId, commentId) {
+            const post = posts.find(p => p.id === postId);
+            if (!post || !post.comments) return;
+            
+            const comment = post.comments.find(c => c.id === commentId);
+            if (!comment) return;
+            
+            if (comment.liked) {
+                comment.likes--;
+                comment.liked = false;
+            } else {
+                comment.likes++;
+                comment.liked = true;
+            }
+            
+            // به‌روزرسانی نمایش
+            loadPosts();
+        }
+        
+        // نمایش/مخفی کردن کامنت‌ها
+        function toggleComments(postId) {
+            const commentsSection = document.getElementById(`comments-${postId}`);
+            if (commentsSection) {
+                if (commentsSection.style.display === 'block') {
+                    commentsSection.style.display = 'none';
+                } else {
+                    commentsSection.style.display = 'block';
+                }
+            }
+        }
+        
+        // ویرایش توییت
+        function editTweet(postId) {
+            const post = posts.find(p => p.id === postId);
+            if (!post) return;
+            
+            currentEditingTweetId = postId;
+            document.getElementById('editTweetInput').value = post.content;
+            document.getElementById('editCharCounter').textContent = `${post.content.length}/۲۸۰`;
+            document.getElementById('editTweetPanel').style.display = 'block';
+            document.getElementById('overlay').style.display = 'block';
+        }
+        
+        // ذخیره توییت ویرایش شده
+        function saveEditedTweet() {
+            if (!currentEditingTweetId) return;
+            
+            const editedContent = document.getElementById('editTweetInput').value.trim();
+            if (editedContent.length === 0) return;
+            
+            const post = posts.find(p => p.id === currentEditingTweetId);
+            if (post) {
+                post.content = editedContent;
+            }
+            
+            // بستن پنل ویرایش
+            document.getElementById('editTweetPanel').style.display = 'none';
+            document.getElementById('overlay').style.display = 'none';
+            currentEditingTweetId = null;
+            
+            // به‌روزرسانی نمایش
+            loadPosts();
+            
+            // نمایش پیام موفقیت
+            showMessageInSocial("توییت با موفقیت ویرایش شد!", "success");
+        }
+        
+        // بارگذاری ایموجی‌ها
+        function loadEmojis() {
+            const emojiPanel = document.getElementById('emojiPanel');
+            emojiPanel.innerHTML = '';
+            
+            emojis.forEach(emoji => {
+                const emojiElement = document.createElement('div');
+                emojiElement.className = 'emoji-item';
+                emojiElement.textContent = emoji;
+                emojiElement.addEventListener('click', function() {
+                    const tweetInput = document.getElementById('tweetInput');
+                    tweetInput.value += emoji;
+                    updateCharCounter();
+                    emojiPanel.style.display = 'none';
+                });
+                
+                emojiPanel.appendChild(emojiElement);
+            });
+        }
+        
+        // افزودن ایموجی به توییت
+        function addEmojiToTweet(emoji) {
+            const tweetInput = document.getElementById('tweetInput');
+            tweetInput.value += emoji;
+            updateCharCounter();
+        }
+        
+        // جستجو در پست‌ها و کاربران
+        function performSearch(query) {
+            if (query.length < 2) {
+                return [];
+            }
+            
+            const results = [];
+            const lowerQuery = query.toLowerCase();
+            
+            // جستجو در پست‌ها
+            posts.forEach(post => {
+                if (post.content.toLowerCase().includes(lowerQuery) || 
+                    post.user.name.toLowerCase().includes(lowerQuery) ||
+                    post.user.handle.toLowerCase().includes(lowerQuery)) {
+                    results.push({
+                        type: 'post',
+                        content: post.content,
+                        user: post.user,
+                        timeAgo: post.timeAgo
+                    });
+                }
+            });
+            
+            // جستجو در کاربران پیشنهادی
+            const suggestedUsers = [
+                { name: "تکنولوژی روز", handle: "@techdaily" },
+                { name: "طراحی وب", handle: "@webdesign" },
+                { name: "برنامه‌نویسی", handle: "@coding" },
+                { name: "هوش مصنوعی", handle: "@ai_news" }
+            ];
+            
+            suggestedUsers.forEach(user => {
+                if (user.name.toLowerCase().includes(lowerQuery) || 
+                    user.handle.toLowerCase().includes(lowerQuery)) {
+                    results.push({
+                        type: 'user',
+                        user: user
+                    });
+                }
+            });
+            
+            return results;
+        }
+        
+        // نمایش نتایج جستجو
+        function displaySearchResults(results, resultsContainer) {
+            resultsContainer.innerHTML = '';
+            
+            if (results.length === 0) {
+                resultsContainer.innerHTML = '<div class="search-result-item">نتیجه‌ای یافت نشد</div>';
+            } else {
+                results.forEach(result => {
+                    const resultElement = document.createElement('div');
+                    resultElement.className = 'search-result-item';
+                    
+                    if (result.type === 'post') {
+                        resultElement.innerHTML = `
+                            <div style="font-weight: bold;">${result.user.name} ${result.user.verified ? '<i class="fas fa-check-circle verified-badge"></i>' : ''}</div>
+                            <div style="color: var(--light-text); font-size: 0.9rem;">${result.user.handle}</div>
+                            <div style="margin-top: 0.5rem;">${result.content}</div>
+                            <div style="color: var(--light-text); font-size: 0.8rem; margin-top: 0.5rem;">${result.timeAgo}</div>
+                        `;
+                    } else if (result.type === 'user') {
+                        resultElement.innerHTML = `
+                            <div style="display: flex; align-items: center; gap: 1rem;">
+                                <div class="suggestion-avatar">
+                                    <i class="fas fa-user"></i>
+                                </div>
+                                <div>
+                                    <div style="font-weight: bold;">${result.user.name}</div>
+                                    <div style="color: var(--light-text); font-size: 0.9rem;">${result.user.handle}</div>
+                                </div>
+                            </div>
+                        `;
+                    }
+                    
+                    resultsContainer.appendChild(resultElement);
+                });
+            }
+            
+            resultsContainer.style.display = 'block';
+        }
+        
+        // بارگذاری اعلان‌ها
+        function loadNotifications() {
+            const notificationsList = document.getElementById('notificationsList');
+            notificationsList.innerHTML = '';
+            
+            const unreadCount = sampleNotifications.filter(n => !n.read).length;
+            
+            // به‌روزرسانی نشانگر اعلان‌ها
+            document.getElementById('navNotificationBadge').textContent = unreadCount;
+            document.getElementById('sidebarNotificationBadge').textContent = unreadCount;
+            document.getElementById('mobileNotificationBadge').textContent = unreadCount;
+            
+            // نمایش اعلان‌ها
+            sampleNotifications.forEach(notification => {
+                const notificationElement = document.createElement('div');
+                notificationElement.className = `notification-item ${notification.read ? '' : 'notification-unread'}`;
+                
+                let icon = '';
+                switch (notification.type) {
+                    case 'like':
+                        icon = '<i class="fas fa-heart" style="color: #e0245e;"></i>';
+                        break;
+                    case 'retweet':
+                        icon = '<i class="fas fa-retweet" style="color: #17bf63;"></i>';
+                        break;
+                    case 'follow':
+                        icon = '<i class="fas fa-user-plus" style="color: var(--primary-color);"></i>';
+                        break;
+                    case 'mention':
+                        icon = '<i class="fas fa-at" style="color: var(--primary-color);"></i>';
+                        break;
+                    case 'system':
+                        icon = '<i class="fas fa-info-circle" style="color: var(--primary-color);"></i>';
+                        break;
+                }
+                
+                notificationElement.innerHTML = `
+                    <div class="notification-avatar">
+                        ${icon}
+                    </div>
+                    <div class="notification-content">
+                        <div class="notification-text">
+                            <strong>${notification.user.name}</strong> ${notification.text}
+                        </div>
+                        <div class="notification-time">${notification.timeAgo}</div>
+                    </div>
+                `;
+                
+                notificationsList.appendChild(notificationElement);
+            });
+        }
+        
+        // تغییر صفحه به بخش جستجو
+        function showExplorePage() {
+            document.getElementById('pageTitle').textContent = 'کاوش';
+            document.getElementById('searchSection').style.display = 'block';
+            document.getElementById('createPostSection').style.display = 'none';
+            document.getElementById('postsFeed').style.display = 'none';
+        }
+        
+        // بازگشت به صفحه اصلی
+        function showHomePage() {
+            document.getElementById('pageTitle').textContent = 'خانه';
+            document.getElementById('searchSection').style.display = 'none';
+            document.getElementById('createPostSection').style.display = 'flex';
+            document.getElementById('postsFeed').style.display = 'block';
+            loadPosts();
+        }
+        
+        // مدیریت فرم ثبت‌نام
+        document.getElementById('registerForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const username = document.getElementById('username').value.trim();
+            const password = document.getElementById('password').value;
+            const confirmPassword = document.getElementById('confirmPassword').value;
+            
+            // اعتبارسنجی
+            if (username.length < 3) {
+                showMessage('نام کاربری باید حداقل ۳ کاراکتر باشد', 'error');
+                return;
+            }
+            
+            if (password.length < 6) {
+                showMessage('رمز عبور باید حداقل ۶ کاراکتر باشد', 'error');
+                return;
+            }
+            
+            if (password !== confirmPassword) {
+                showMessage('رمز عبور و تکرار آن مطابقت ندارند', 'error');
+                return;
+            }
+            
+            // ذخیره اطلاعات کاربر
+            currentUser = {
+                name: username,
+                handle: `@${username.toLowerCase()}`,
+                verified: false
+            };
+            
+            localStorage.setItem('currentUser', JSON.stringify(currentUser));
+            
+            showMessage('ثبت‌نام شما با موفقیت انجام شد!', 'success');
+            
+            // پاک کردن فرم
+            document.getElementById('registerForm').reset();
+            
+            // هدایت به صفحه شبکه اجتماعی
+            redirectToSocialMedia();
+        });
+        
+        // نمایش فرم ورود (نمایشی)
+        document.getElementById('showLogin').addEventListener('click', function(e) {
+            e.preventDefault();
+            showMessage('این قابلیت در حال حاضر در دسترس نیست', 'error');
+        });
+        
+        // هدایت دستی با دکمه
+        document.getElementById('redirectButton').addEventListener('click', function() {
+            redirectToSocialMedia();
+        });
+        
+        // تغییر حالت شب/روز در شبکه اجتماعی
+        document.getElementById('themeToggle').addEventListener('click', function() {
+            document.body.classList.toggle('dark-mode');
+            const icon = document.getElementById('themeToggle').querySelector('i');
+            
+            if (document.body.classList.contains('dark-mode')) {
+                icon.classList.remove('fa-moon');
+                icon.classList.add('fa-sun');
+            } else {
+                icon.classList.remove('fa-sun');
+                icon.classList.add('fa-moon');
+            }
+        });
+        
+        // عملکرد دکمه‌های دنبال کردن
+        document.addEventListener('click', function(e) {
+            if (e.target.classList.contains('follow-button')) {
+                if (e.target.textContent === 'دنبال کردن') {
+                    e.target.textContent = 'دنبال شده';
+                    e.target.style.backgroundColor = '#657786';
+                } else {
+                    e.target.textContent = 'دنبال کردن';
+                    e.target.style.backgroundColor = '';
+                }
+            }
+        });
+        
+        // مدیریت توییت‌گذاری
+        document.getElementById('tweetButton').addEventListener('click', sendTweet);
+        
+        document.getElementById('tweetInput').addEventListener('input', updateCharCounter);
+        
+        document.getElementById('headerTweetButton').addEventListener('click', function() {
+            document.getElementById('tweetInput').focus();
+        });
+        
+        // مدیریت تعامل با پست‌ها
+        document.addEventListener('click', function(e) {
+            // لایک کردن پست
+            if (e.target.closest('.post-action.like')) {
+                const likeAction = e.target.closest('.post-action.like');
+                const postId = parseInt(likeAction.dataset.postId);
+                likePost(postId);
+            }
+            
+            // ریتوییت کردن پست
+            if (e.target.closest('.post-action.retweet')) {
+                const retweetAction = e.target.closest('.post-action.retweet');
+                const postId = parseInt(retweetAction.dataset.postId);
+                retweetPost(postId);
+            }
+            
+            // نمایش/مخفی کردن کامنت‌ها
+            if (e.target.closest('.post-action.comment')) {
+                const commentAction = e.target.closest('.post-action.comment');
+                const postId = parseInt(commentAction.dataset.postId);
+                toggleComments(postId);
+            }
+            
+            // افزودن کامنت
+            if (e.target.classList.contains('comment-button')) {
+                const postId = parseInt(e.target.dataset.postId);
+                const commentInput = document.getElementById(`comment-input-${postId}`);
+                addComment(postId, commentInput.value);
+                commentInput.value = '';
+            }
+            
+            // لایک کردن کامنت
+            if (e.target.closest('.comment-action.like')) {
+                const likeAction = e.target.closest('.comment-action.like');
+                const commentId = parseInt(likeAction.dataset.commentId);
+                const postId = parseInt(likeAction.dataset.postId);
+                likeComment(postId, commentId);
+            }
+            
+            // ویرایش توییت
+            if (e.target.closest('.post-action.edit')) {
+                const editAction = e.target.closest('.post-action.edit');
+                const postId = parseInt(editAction.dataset.postId);
+                editTweet(postId);
+            }
+        });
+        
+        // مدیریت ایموجی
+        document.getElementById('emojiButton').addEventListener('click', function() {
+            const emojiPanel = document.getElementById('emojiPanel');
+            if (emojiPanel.style.display === 'grid') {
+                emojiPanel.style.display = 'none';
+            } else {
+                emojiPanel.style.display = 'grid';
+            }
+        });
+        
+        // بستن پنل ایموجی هنگام کلیک خارج
+        document.addEventListener('click', function(e) {
+            if (!e.target.closest('.action-icons') && !e.target.closest('.emoji-panel')) {
+                document.getElementById('emojiPanel').style.display = 'none';
+            }
+        });
+        
+        // مدیریت جستجو
+        document.getElementById('sidebarSearchInput').addEventListener('input', function(e) {
+            const query = e.target.value.trim();
+            const results = performSearch(query);
+            const resultsContainer = document.getElementById('sidebarSearchResults');
+            displaySearchResults(results, resultsContainer);
+        });
+        
+        document.getElementById('mainSearchInput').addEventListener('input', function(e) {
+            const query = e.target.value.trim();
+            const results = performSearch(query);
+            const resultsContainer = document.getElementById('mainSearchResults');
+            displaySearchResults(results, resultsContainer);
+        });
+        
+        // بستن نتایج جستجو هنگام کلیک خارج
+        document.addEventListener('click', function(e) {
+            if (!e.target.closest('.search-box')) {
+                document.querySelectorAll('.search-results').forEach(container => {
+                    container.style.display = 'none';
+                });
+            }
+        });
+        
+        // مدیریت بخش کاوش
+        document.getElementById('exploreLink').addEventListener('click', function(e) {
+            e.preventDefault();
+            showExplorePage();
+        });
+        
+        document.getElementById('sidebarExploreLink').addEventListener('click', function(e) {
+            e.preventDefault();
+            showExplorePage();
+        });
+        
+        document.getElementById('mobileExploreLink').addEventListener('click', function(e) {
+            e.preventDefault();
+            showExplorePage();
+        });
+        
+        // مدیریت اعلان‌ها
+        document.getElementById('notificationsLink').addEventListener('click', function(e) {
+            e.preventDefault();
+            document.getElementById('notificationsPanel').style.display = 'block';
+            document.getElementById('overlay').style.display = 'block';
+        });
+        
+        document.getElementById('sidebarNotificationsLink').addEventListener('click', function(e) {
+            e.preventDefault();
+            document.getElementById('notificationsPanel').style.display = 'block';
+            document.getElementById('overlay').style.display = 'block';
+        });
+        
+        document.getElementById('mobileNotificationsLink').addEventListener('click', function(e) {
+            e.preventDefault();
+            document.getElementById('notificationsPanel').style.display = 'block';
+            document.getElementById('overlay').style.display = 'block';
+        });
+        
+        document.getElementById('closeNotifications').addEventListener('click', function() {
+            document.getElementById('notificationsPanel').style.display = 'none';
+            document.getElementById('overlay').style.display = 'none';
+        });
+        
+        // مدیریت تیک آبی
+        document.getElementById('blueTickLink').addEventListener('click', function(e) {
+            e.preventDefault();
+            document.getElementById('blueTickPanel').style.display = 'block';
+            document.getElementById('overlay').style.display = 'block';
+        });
+        
+        document.getElementById('mobileBlueTick').addEventListener('click', function(e) {
+            e.preventDefault();
+            document.getElementById('blueTickPanel').style.display = 'block';
+            document.getElementById('overlay').style.display = 'block';
+        });
+        
+        document.getElementById('cancelBlueTick').addEventListener('click', function() {
+            document.getElementById('blueTickPanel').style.display = 'none';
+            document.getElementById('overlay').style.display = 'none';
+        });
+        
+        document.getElementById('overlay').addEventListener('click', function() {
+            document.getElementById('blueTickPanel').style.display = 'none';
+            document.getElementById('notificationsPanel').style.display = 'none';
+            document.getElementById('editTweetPanel').style.display = 'none';
+            this.style.display = 'none';
+        });
+        
+        // انتخاب گزینه تیک آبی
+        document.querySelectorAll('.blue-tick-option').forEach(option => {
+            option.addEventListener('click', function() {
+                document.querySelectorAll('.blue-tick-option').forEach(opt => {
+                    opt.classList.remove('selected');
+                });
+                this.classList.add('selected');
+                document.getElementById('applyBlueTick').disabled = false;
+            });
+        });
+        
+        // درخواست تیک آبی
+        document.getElementById('applyBlueTick').addEventListener('click', function() {
+            const selectedOption = document.querySelector('.blue-tick-option.selected');
+            if (!selectedOption) return;
+            
+            const tickType = selectedOption.dataset.type;
+            
+            // شبیه‌سازی درخواست تیک آبی
+            setTimeout(() => {
+                currentUser.verified = true;
+                localStorage.setItem('currentUser', JSON.stringify(currentUser));
+                
+                document.getElementById('blueTickPanel').style.display = 'none';
+                document.getElementById('overlay').style.display = 'none';
+                
+                showMessageInSocial("درخواست تیک آبی شما ثبت شد! تیک آبی به حساب شما اضافه گردید.", "success");
+            }, 1500);
+        });
+        
+        // مدیریت ویرایش توییت
+        document.getElementById('editTweetInput').addEventListener('input', function() {
+            const charCount = this.value.length;
+            document.getElementById('editCharCounter').textContent = `${charCount}/۲۸۰`;
+        });
+        
+        document.getElementById('saveTweetButton').addEventListener('click', saveEditedTweet);
+        
+        document.getElementById('closeEditTweet').addEventListener('click', function() {
+            document.getElementById('editTweetPanel').style.display = 'none';
+            document.getElementById('overlay').style.display = 'none';
+            currentEditingTweetId = null;
+        });
+        
+        // بازگشت به خانه از طریق کلیک روی لوگو
+        document.querySelector('.logo').addEventListener('click', function(e) {
+            e.preventDefault();
+            showHomePage();
+        });
+        
+        // بازگشت به خانه از طریق کلیک روی خانه در ناوبری
+        document.getElementById('homeLink').addEventListener('click', function(e) {
+            e.preventDefault();
+            showHomePage();
+        });
+        
+        document.getElementById('sidebarHomeLink').addEventListener('click', function(e) {
+            e.preventDefault();
+            showHomePage();
+        });
+        
+        document.getElementById('mobileHomeLink').addEventListener('click', function(e) {
+            e.preventDefault();
+            showHomePage();
+        });
+        
+        // ارسال کامنت با کلید اینتر
+        document.addEventListener('keypress', function(e) {
+            if (e.key === 'Enter' && e.target.classList.contains('comment-input')) {
+                const postId = parseInt(e.target.id.split('-')[2]);
+                addComment(postId, e.target.value);
+                e.target.value = '';
+            }
+        });
+    </script>
+</body>
+</html>
